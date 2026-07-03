@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LTS.Core/LTS.Core.csproj" />
+  <Project Path="LTS.UI/LTS.UI.csproj" />
+</Solution>

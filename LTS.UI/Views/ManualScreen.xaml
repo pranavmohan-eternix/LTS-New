@@ -1,0 +1,184 @@
+﻿<UserControl x:Class="LTS.UI.Views.ManualScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <UserControl.Resources>
+
+        <Style TargetType="Button">
+
+            <Setter Property="Background" Value="#2563EB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+
+            <Style.Triggers>
+
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#D1D5DB"/>
+                    <Setter Property="Foreground" Value="#6B7280"/>
+                </Trigger>
+
+            </Style.Triggers>
+
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid Margin="15">
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="180"/>
+
+            <ColumnDefinition Width="220"/>
+
+            <ColumnDefinition Width="340"/>
+
+        </Grid.ColumnDefinitions>
+
+        <!-- ================= Chambers ================= -->
+
+        <GroupBox Header="Chambers"
+                  Margin="5">
+
+            <ListBox x:Name="ChamberList"/>
+
+        </GroupBox>
+
+        <!-- ================= Commands ================= -->
+
+        <GroupBox Header="Commands"
+                  Grid.Column="1"
+                  Margin="5">
+
+            <StackPanel Margin="15">
+
+                <Button Content="Initialize"
+                        Click="BtnInitialize_Click"
+                        IsEnabled="{Binding CanInitialize}"/>
+
+                <Button Content="Place Material"
+                        Click="BtnPlace_Click"
+                        IsEnabled="{Binding CanPlaceMaterial}"/>
+
+                <Button Content="Pick Material"
+                        Click="BtnPick_Click"
+                        IsEnabled="{Binding CanPickMaterial}"/>
+
+                <Button Content="Run Recipe"
+                        Click="BtnRunRecipe_Click"
+                        IsEnabled="{Binding CanRunRecipe}"/>
+
+            </StackPanel>
+
+        </GroupBox>
+
+        <!-- ================= Status ================= -->
+
+        <GroupBox Header="Status"
+                  Grid.Column="2"
+                  Margin="5">
+
+            <Grid Margin="20">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="110"/>
+
+                    <ColumnDefinition Width="150"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="45"/>
+
+                    <RowDefinition Height="45"/>
+
+                    <RowDefinition Height="45"/>
+
+                    <RowDefinition Height="45"/>
+
+                    <RowDefinition Height="45"/>
+
+                </Grid.RowDefinitions>
+
+                <!-- Chamber -->
+
+                <TextBlock Text="Chamber"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding ChamberVM.Identifier}"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <!-- State -->
+
+                <TextBlock Grid.Row="1"
+                           Text="State"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding ChamberVM.ProcessState}"
+                           Foreground="{Binding ChamberVM.ProcessStateBrush}"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <!-- Material -->
+
+                <TextBlock Grid.Row="2"
+                           Text="Material"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding ChamberVM.MaterialPresence}"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <!-- Duration -->
+
+                <TextBlock Grid.Row="3"
+                           Text="Duration"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding ChamberVM.ProcessDuration}"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <!-- Recipe -->
+
+                <TextBlock Grid.Row="4"
+                           Text="Recipe"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding ChamberVM.SelectedRecipe}"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+            </Grid>
+
+        </GroupBox>
+
+    </Grid>
+
+</UserControl>

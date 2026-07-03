@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="LTS.UI.Views.JobScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:LTS.UI.Controls">
+    <Grid>
+
+        <controls:ChamberStatusControl
+        x:Name="ChamberControl"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Margin="20"/>
+
+    </Grid>
+
+</UserControl>
