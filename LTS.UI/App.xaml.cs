@@ -1,6 +1,7 @@
-﻿using System.Windows;
-using LTS.Core.Models;
+﻿using LTS.Core.Models;
+using LTS.UI.ViewModels;
 using LTS.UI.Views;
+using System.Windows;
 
 namespace LTS.UI
 {
@@ -10,9 +11,11 @@ namespace LTS.UI
         {
             base.OnStartup(e);
 
-            var chamber = new Chamber("CH-01");
+            var equipment = new Equipment();
 
-            var window = new MainWindow(chamber);
+            var equipmentVM = new EquipmentViewModel(equipment);
+
+            var window = new MainWindow(equipmentVM);
 
             window.Show();
         }

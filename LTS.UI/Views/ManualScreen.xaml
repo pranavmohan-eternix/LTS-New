@@ -29,25 +29,23 @@
     <Grid Margin="15">
 
         <Grid.ColumnDefinitions>
-
             <ColumnDefinition Width="180"/>
-
             <ColumnDefinition Width="220"/>
-
             <ColumnDefinition Width="340"/>
-
         </Grid.ColumnDefinitions>
 
-        <!-- ================= Chambers ================= -->
+        <!-- Chambers -->
 
         <GroupBox Header="Chambers"
                   Margin="5">
 
-            <ListBox x:Name="ChamberList"/>
+            <ListBox ItemsSource="{Binding Chambers}"
+                     SelectedItem="{Binding SelectedChamber}"
+                     DisplayMemberPath="Identifier"/>
 
         </GroupBox>
 
-        <!-- ================= Commands ================= -->
+        <!-- Commands -->
 
         <GroupBox Header="Commands"
                   Grid.Column="1"
@@ -57,25 +55,25 @@
 
                 <Button Content="Initialize"
                         Click="BtnInitialize_Click"
-                        IsEnabled="{Binding CanInitialize}"/>
+                        IsEnabled="{Binding SelectedChamber.CanInitialize}"/>
 
                 <Button Content="Place Material"
                         Click="BtnPlace_Click"
-                        IsEnabled="{Binding CanPlaceMaterial}"/>
+                        IsEnabled="{Binding SelectedChamber.CanPlaceMaterial}"/>
 
                 <Button Content="Pick Material"
                         Click="BtnPick_Click"
-                        IsEnabled="{Binding CanPickMaterial}"/>
+                        IsEnabled="{Binding SelectedChamber.CanPickMaterial}"/>
 
                 <Button Content="Run Recipe"
                         Click="BtnRunRecipe_Click"
-                        IsEnabled="{Binding CanRunRecipe}"/>
+                        IsEnabled="{Binding SelectedChamber.CanRunRecipe}"/>
 
             </StackPanel>
 
         </GroupBox>
 
-        <!-- ================= Status ================= -->
+        <!-- Status -->
 
         <GroupBox Header="Status"
                   Grid.Column="2"
@@ -84,25 +82,16 @@
             <Grid Margin="20">
 
                 <Grid.ColumnDefinitions>
-
                     <ColumnDefinition Width="110"/>
-
                     <ColumnDefinition Width="150"/>
-
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-
                     <RowDefinition Height="45"/>
-
                     <RowDefinition Height="45"/>
-
                     <RowDefinition Height="45"/>
-
                     <RowDefinition Height="45"/>
-
                     <RowDefinition Height="45"/>
-
                 </Grid.RowDefinitions>
 
                 <!-- Chamber -->
@@ -113,7 +102,7 @@
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Column="1"
-                           Text="{Binding ChamberVM.Identifier}"
+                           Text="{Binding SelectedChamber.ChamberVM.Identifier}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
@@ -127,8 +116,8 @@
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="1"
-                           Text="{Binding ChamberVM.ProcessState}"
-                           Foreground="{Binding ChamberVM.ProcessStateBrush}"
+                           Text="{Binding SelectedChamber.ChamberVM.ProcessState}"
+                           Foreground="{Binding SelectedChamber.ChamberVM.ProcessStateBrush}"
                            FontWeight="Bold"
                            FontSize="16"
                            VerticalAlignment="Center"/>
@@ -143,7 +132,7 @@
 
                 <TextBlock Grid.Row="2"
                            Grid.Column="1"
-                           Text="{Binding ChamberVM.MaterialPresence}"
+                           Text="{Binding SelectedChamber.ChamberVM.MaterialPresence}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
@@ -157,7 +146,7 @@
 
                 <TextBlock Grid.Row="3"
                            Grid.Column="1"
-                           Text="{Binding ChamberVM.ProcessDuration}"
+                           Text="{Binding SelectedChamber.ChamberVM.ProcessDuration}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
@@ -171,7 +160,7 @@
 
                 <TextBlock Grid.Row="4"
                            Grid.Column="1"
-                           Text="{Binding ChamberVM.SelectedRecipe}"
+                           Text="{Binding SelectedChamber.ChamberVM.SelectedRecipe}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 

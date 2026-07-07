@@ -5,13 +5,14 @@ using LTS.Core.Models;
 
 namespace LTS.UI.ViewModels;
 
-public class ManualScreenVM : INotifyPropertyChanged
+public class ChamberViewModel : INotifyPropertyChanged
 {
     private readonly Chamber _chamber;
+    public string Identifier => _chamber.Identifier;
 
     public ChamberStatusControlVM ChamberVM { get; }
 
-    public ManualScreenVM(Chamber chamber)
+    public ChamberViewModel(Chamber chamber)
     {
         _chamber = chamber;
 

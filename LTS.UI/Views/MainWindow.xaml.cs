@@ -1,4 +1,5 @@
 ﻿using LTS.Core.Models;
+using LTS.UI.ViewModels;
 using System.Windows;
 
 namespace LTS.UI.Views
@@ -8,13 +9,13 @@ namespace LTS.UI.Views
         private readonly JobScreen _jobScreen;
         private readonly ManualScreen _manualScreen;
 
-        public MainWindow(Chamber chamber)
+        public MainWindow(EquipmentViewModel equipmentVM)
         {
             InitializeComponent();
 
-            _jobScreen = new JobScreen(chamber);
+            _jobScreen = new JobScreen(equipmentVM);
 
-            _manualScreen = new ManualScreen(chamber);
+            _manualScreen = new ManualScreen(equipmentVM);
 
             MainContent.Content = _jobScreen;
         }

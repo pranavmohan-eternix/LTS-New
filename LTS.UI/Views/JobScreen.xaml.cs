@@ -6,12 +6,11 @@ namespace LTS.UI.Views
 {
     public partial class JobScreen : UserControl
     {
-        public JobScreen(Chamber chamber)
+        public JobScreen(EquipmentViewModel equipmentVM)
         {
             InitializeComponent();
 
-            ChamberControl.DataContext =
-                new ChamberStatusControlVM(chamber);
+            DataContext = equipmentVM;
         }
     }
 }
