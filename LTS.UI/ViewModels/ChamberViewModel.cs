@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using LTS.Core.Models;
 
 namespace LTS.UI.ViewModels;
@@ -8,33 +10,65 @@ namespace LTS.UI.ViewModels;
 public class ChamberViewModel : INotifyPropertyChanged
 {
     private readonly Chamber _chamber;
-    public string Identifier => _chamber.Identifier;
-
-    public ChamberStatusControlVM ChamberVM { get; }
 
     public ChamberViewModel(Chamber chamber)
     {
         _chamber = chamber;
-
-        ChamberVM = new ChamberStatusControlVM(chamber);
-
         _chamber.StateChanged += OnStateChanged;
     }
+
+    // =========================
+    // Status Properties
+    // =========================
+
+    public string Identifier => _chamber.Identifier;
+
+    public ProcessState ProcessState => _chamber.ProcessState;
+
+    public string ProcessDuration => $"{_chamber.ProcessDuration} Seconds";
+
+    public string MaterialPresence =>
+        _chamber.MaterialPresence ? "Present" : "Empty";
+
+    public string SelectedRecipe => _chamber.SelectedRecipe;
+
+    public Brush ProcessStateBrush
+    {
+        get
+        {
+            return _chamber.ProcessState switch
+            {
+                ProcessState.Init => Brushes.Red,
+                ProcessState.Idle => Brushes.Gold,
+                ProcessState.Running => Brushes.Orange,
+                ProcessState.Completed => Brushes.LimeGreen,
+                _ => Brushes.Gray
+            };
+        }
+    }
+
+    // =========================
+    // Command State
+    // =========================
 
     public bool CanInitialize => !_chamber.IsInitialized;
 
     public bool CanPlaceMaterial =>
-     _chamber.IsInitialized &&
-     !_chamber.MaterialPresence &&
-     _chamber.ProcessState == ProcessState.Idle;
+        _chamber.IsInitialized &&
+        !_chamber.MaterialPresence &&
+        _chamber.ProcessState == ProcessState.Idle;
 
     public bool CanPickMaterial =>
-    _chamber.MaterialPresence &&
-    _chamber.ProcessState != ProcessState.Running;
+        _chamber.MaterialPresence &&
+        _chamber.ProcessState != ProcessState.Running;
 
     public bool CanRunRecipe =>
         _chamber.MaterialPresence &&
         _chamber.ProcessState == ProcessState.Idle;
+
+    // =========================
+    // Actions
+    // =========================
 
     public void Initialize()
     {
@@ -56,10 +90,23 @@ public class ChamberViewModel : INotifyPropertyChanged
         Task.Run(() => _chamber.RunRecipe());
     }
 
+    // =========================
+    // Property Changed
+    // =========================
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnStateChanged(object? sender, EventArgs e)
     {
+        // Status
+        OnPropertyChanged(nameof(Identifier));
+        OnPropertyChanged(nameof(ProcessState));
+        OnPropertyChanged(nameof(ProcessDuration));
+        OnPropertyChanged(nameof(MaterialPresence));
+        OnPropertyChanged(nameof(SelectedRecipe));
+        OnPropertyChanged(nameof(ProcessStateBrush));
+
+        // Commands
         OnPropertyChanged(nameof(CanInitialize));
         OnPropertyChanged(nameof(CanPlaceMaterial));
         OnPropertyChanged(nameof(CanPickMaterial));

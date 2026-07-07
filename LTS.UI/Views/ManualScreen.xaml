@@ -102,7 +102,7 @@
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Column="1"
-                           Text="{Binding SelectedChamber.ChamberVM.Identifier}"
+                           Text="{Binding SelectedChamber.Identifier}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
@@ -116,8 +116,8 @@
 
                 <TextBlock Grid.Row="1"
                            Grid.Column="1"
-                           Text="{Binding SelectedChamber.ChamberVM.ProcessState}"
-                           Foreground="{Binding SelectedChamber.ChamberVM.ProcessStateBrush}"
+                           Text="{Binding SelectedChamber.ProcessState}"
+                           Foreground="{Binding SelectedChamber.ProcessStateBrush}"
                            FontWeight="Bold"
                            FontSize="16"
                            VerticalAlignment="Center"/>
@@ -132,7 +132,7 @@
 
                 <TextBlock Grid.Row="2"
                            Grid.Column="1"
-                           Text="{Binding SelectedChamber.ChamberVM.MaterialPresence}"
+                           Text="{Binding SelectedChamber.MaterialPresence}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
@@ -146,7 +146,7 @@
 
                 <TextBlock Grid.Row="3"
                            Grid.Column="1"
-                           Text="{Binding SelectedChamber.ChamberVM.ProcessDuration}"
+                           Text="{Binding SelectedChamber.ProcessDuration}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
@@ -160,7 +160,7 @@
 
                 <TextBlock Grid.Row="4"
                            Grid.Column="1"
-                           Text="{Binding SelectedChamber.ChamberVM.SelectedRecipe}"
+                           Text="{Binding SelectedChamber.SelectedRecipe}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
