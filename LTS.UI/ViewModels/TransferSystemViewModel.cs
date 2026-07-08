@@ -24,44 +24,65 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
 
     public string CurrentLocation => _transferSystem.CurrentLocation;
 
-    public string BusyStatus =>
-        _transferSystem.IsBusy ? "Busy" : "Idle";
+    public string HoldingStatus =>
+        _transferSystem.HasMaterial ? "Holding Wafer" : "Empty";
 
-    public Brush BusyStatusBrush =>
-        _transferSystem.IsBusy
-            ? Brushes.Orange
-            : Brushes.LimeGreen;
+    public Brush HoldingStatusBrush =>
+        _transferSystem.HasMaterial
+            ? Brushes.LimeGreen
+            : Brushes.Red;
 
     // =========================
     // Button States
     // =========================
 
-    public bool CanMove => !_transferSystem.IsBusy;
+    public bool CanMoveToLoadPort =>
+        _transferSystem.CurrentLocation == "Home" &&
+        !_transferSystem.HasMaterial;
 
-    public bool CanStop => _transferSystem.IsBusy;
+    public bool CanPick =>
+        _transferSystem.CurrentLocation == "Load Port" &&
+        !_transferSystem.HasMaterial;
+
+    public bool CanMoveToChamber =>
+        _transferSystem.CurrentLocation == "Load Port" &&
+        _transferSystem.HasMaterial;
+
+    public bool CanPlace =>
+        _transferSystem.CurrentLocation == "Chamber" &&
+        _transferSystem.HasMaterial;
+
+    public bool CanMoveHome =>
+        _transferSystem.CurrentLocation == "Chamber" &&
+        !_transferSystem.HasMaterial;
 
     // =========================
     // Actions
     // =========================
 
+    public void MoveToLoadPort()
+    {
+        _transferSystem.MoveToLoadPort();
+    }
+
+    public void Pick()
+    {
+        _transferSystem.Pick();
+    }
+
+    public void MoveToChamber()
+    {
+        _transferSystem.MoveToChamber();
+    }
+
+    public void Place()
+    {
+        _transferSystem.Place();
+    }
+
     public void MoveHome()
     {
-        _transferSystem.MoveTo("Home");
-    }
-
-    public void MoveLoadPort()
-    {
-        _transferSystem.MoveTo("Load Port");
-    }
-
-    public void MoveChamber()
-    {
-        _transferSystem.MoveTo("Chamber");
-    }
-
-    public void Stop()
-    {
-        _transferSystem.Stop();
+        _transferSystem.MoveHome();
     }
 
     // =========================
@@ -73,11 +94,14 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
     private void OnStateChanged(object? sender, EventArgs e)
     {
         OnPropertyChanged(nameof(CurrentLocation));
-        OnPropertyChanged(nameof(BusyStatus));
-        OnPropertyChanged(nameof(BusyStatusBrush));
+        OnPropertyChanged(nameof(HoldingStatus));
+        OnPropertyChanged(nameof(HoldingStatusBrush));
 
-        OnPropertyChanged(nameof(CanMove));
-        OnPropertyChanged(nameof(CanStop));
+        OnPropertyChanged(nameof(CanMoveToLoadPort));
+        OnPropertyChanged(nameof(CanPick));
+        OnPropertyChanged(nameof(CanMoveToChamber));
+        OnPropertyChanged(nameof(CanPlace));
+        OnPropertyChanged(nameof(CanMoveHome));
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

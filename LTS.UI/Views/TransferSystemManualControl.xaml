@@ -14,10 +14,12 @@
             <Setter Property="FontSize" Value="15"/>
 
             <Style.Triggers>
+
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Background" Value="#D1D5DB"/>
                     <Setter Property="Foreground" Value="#6B7280"/>
                 </Trigger>
+
             </Style.Triggers>
 
         </Style>
@@ -39,21 +41,25 @@
 
             <StackPanel Margin="15">
 
+                <Button Content="Move to Load Port"
+                        Click="BtnMoveToLoadPort_Click"
+                        IsEnabled="{Binding CanMoveToLoadPort}"/>
+
+                <Button Content="Pick"
+                        Click="BtnPick_Click"
+                        IsEnabled="{Binding CanPick}"/>
+
+                <Button Content="Move to Chamber"
+                        Click="BtnMoveToChamber_Click"
+                        IsEnabled="{Binding CanMoveToChamber}"/>
+
+                <Button Content="Place"
+                        Click="BtnPlace_Click"
+                        IsEnabled="{Binding CanPlace}"/>
+
                 <Button Content="Move Home"
                         Click="BtnMoveHome_Click"
-                        IsEnabled="{Binding CanMove}"/>
-
-                <Button Content="Move Load Port"
-                        Click="BtnMoveLoadPort_Click"
-                        IsEnabled="{Binding CanMove}"/>
-
-                <Button Content="Move Chamber"
-                        Click="BtnMoveChamber_Click"
-                        IsEnabled="{Binding CanMove}"/>
-
-                <Button Content="Stop"
-                        Click="BtnStop_Click"
-                        IsEnabled="{Binding CanStop}"/>
+                        IsEnabled="{Binding CanMoveHome}"/>
 
             </StackPanel>
 
@@ -78,7 +84,7 @@
                     <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
 
-                <!-- Identifier -->
+                <!-- Transfer -->
 
                 <TextBlock Text="Transfer"
                            FontWeight="Bold"
@@ -90,33 +96,33 @@
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
-                <!-- Status -->
-
-                <TextBlock Grid.Row="1"
-                           Text="Status"
-                           FontWeight="Bold"
-                           FontSize="16"
-                           VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding BusyStatus}"
-                           Foreground="{Binding BusyStatusBrush}"
-                           FontWeight="Bold"
-                           FontSize="16"
-                           VerticalAlignment="Center"/>
-
                 <!-- Location -->
 
-                <TextBlock Grid.Row="2"
+                <TextBlock Grid.Row="1"
                            Text="Location"
                            FontWeight="Bold"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
-                <TextBlock Grid.Row="2"
+                <TextBlock Grid.Row="1"
                            Grid.Column="1"
                            Text="{Binding CurrentLocation}"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <!-- Holding -->
+
+                <TextBlock Grid.Row="2"
+                           Text="Holding"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding HoldingStatus}"
+                           Foreground="{Binding HoldingStatusBrush}"
+                           FontWeight="Bold"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 

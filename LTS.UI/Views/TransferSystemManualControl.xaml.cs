@@ -14,24 +14,29 @@ namespace LTS.UI.Views
         private TransferSystemViewModel? ViewModel =>
             DataContext as TransferSystemViewModel;
 
+        private void BtnMoveToLoadPort_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.MoveToLoadPort();
+        }
+
+        private void BtnPick_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.Pick();
+        }
+
+        private void BtnMoveToChamber_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.MoveToChamber();
+        }
+
+        private void BtnPlace_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.Place();
+        }
+
         private void BtnMoveHome_Click(object sender, RoutedEventArgs e)
         {
             ViewModel?.MoveHome();
-        }
-
-        private void BtnMoveLoadPort_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.MoveLoadPort();
-        }
-
-        private void BtnMoveChamber_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.MoveChamber();
-        }
-
-        private void BtnStop_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.Stop();
         }
     }
 }

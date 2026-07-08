@@ -8,25 +8,48 @@ public class TransferSystem
 
     public bool IsBusy { get; private set; }
 
-    public string CurrentLocation { get; private set; } = "Home";
+    public bool HasMaterial { get; private set; }
+
+    public string CurrentLocation { get; private set; }
 
     public event EventHandler? StateChanged;
 
     public TransferSystem(string identifier)
     {
         Identifier = identifier;
+
+        CurrentLocation = "Home";
+        IsBusy = false;
+        HasMaterial = false;
     }
 
-    public void MoveTo(string location)
+    public void MoveToLoadPort()
     {
-        CurrentLocation = location;
-        IsBusy = true;
+        CurrentLocation = "Load Port";
         OnStateChanged();
     }
 
-    public void Stop()
+    public void Pick()
     {
-        IsBusy = false;
+        HasMaterial = true;
+        OnStateChanged();
+    }
+
+    public void MoveToChamber()
+    {
+        CurrentLocation = "Chamber";
+        OnStateChanged();
+    }
+
+    public void Place()
+    {
+        HasMaterial = false;
+        OnStateChanged();
+    }
+
+    public void MoveHome()
+    {
+        CurrentLocation = "Home";
         OnStateChanged();
     }
 
