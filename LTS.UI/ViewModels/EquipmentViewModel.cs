@@ -8,20 +8,28 @@ namespace LTS.UI.ViewModels;
 
 public class EquipmentViewModel : INotifyPropertyChanged
 {
-    private ChamberViewModel? _selectedChamber;
+    private EquipmentItemViewModel? _selectedItem;
 
     public Equipment Equipment { get; }
 
     public ObservableCollection<ChamberViewModel> Chambers { get; }
 
-    public ChamberViewModel? SelectedChamber
+    public ObservableCollection<LoadPortViewModel> LoadPorts { get; }
+
+    public TransferSystemViewModel TransferSystem { get; }
+
+    // NEW
+    public ObservableCollection<EquipmentItemViewModel> EquipmentItems { get; }
+
+    // NEW
+    public EquipmentItemViewModel? SelectedItem
     {
-        get => _selectedChamber;
+        get => _selectedItem;
         set
         {
-            if (_selectedChamber != value)
+            if (_selectedItem != value)
             {
-                _selectedChamber = value;
+                _selectedItem = value;
                 OnPropertyChanged();
             }
         }
@@ -34,7 +42,23 @@ public class EquipmentViewModel : INotifyPropertyChanged
         Chambers = new ObservableCollection<ChamberViewModel>(
             equipment.Chambers.Select(c => new ChamberViewModel(c)));
 
-        SelectedChamber = Chambers.FirstOrDefault();
+        LoadPorts = new ObservableCollection<LoadPortViewModel>(
+            equipment.LoadPorts.Select(lp => new LoadPortViewModel(lp)));
+
+        TransferSystem = new TransferSystemViewModel(
+            equipment.TransferSystem);
+
+        EquipmentItems = new ObservableCollection<EquipmentItemViewModel>();
+
+        foreach (var chamber in Chambers)
+            EquipmentItems.Add(chamber);
+
+        foreach (var loadPort in LoadPorts)
+            EquipmentItems.Add(loadPort);
+
+        EquipmentItems.Add(TransferSystem);
+
+        SelectedItem = EquipmentItems.FirstOrDefault();
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

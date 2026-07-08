@@ -7,11 +7,12 @@ using LTS.Core.Models;
 
 namespace LTS.UI.ViewModels;
 
-public class ChamberViewModel : INotifyPropertyChanged
+public class ChamberViewModel : EquipmentItemViewModel, INotifyPropertyChanged
 {
     private readonly Chamber _chamber;
 
     public ChamberViewModel(Chamber chamber)
+        : base(chamber.Identifier)
     {
         _chamber = chamber;
         _chamber.StateChanged += OnStateChanged;
@@ -20,8 +21,6 @@ public class ChamberViewModel : INotifyPropertyChanged
     // =========================
     // Status Properties
     // =========================
-
-    public string Identifier => _chamber.Identifier;
 
     public ProcessState ProcessState => _chamber.ProcessState;
 
@@ -98,15 +97,12 @@ public class ChamberViewModel : INotifyPropertyChanged
 
     private void OnStateChanged(object? sender, EventArgs e)
     {
-        // Status
-        OnPropertyChanged(nameof(Identifier));
         OnPropertyChanged(nameof(ProcessState));
         OnPropertyChanged(nameof(ProcessDuration));
         OnPropertyChanged(nameof(MaterialPresence));
         OnPropertyChanged(nameof(SelectedRecipe));
         OnPropertyChanged(nameof(ProcessStateBrush));
 
-        // Commands
         OnPropertyChanged(nameof(CanInitialize));
         OnPropertyChanged(nameof(CanPlaceMaterial));
         OnPropertyChanged(nameof(CanPickMaterial));
