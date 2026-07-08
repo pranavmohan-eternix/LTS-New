@@ -18,10 +18,10 @@ public class EquipmentViewModel : INotifyPropertyChanged
 
     public TransferSystemViewModel TransferSystem { get; }
 
-    // NEW
+  
     public ObservableCollection<EquipmentItemViewModel> EquipmentItems { get; }
 
-    // NEW
+
     public EquipmentItemViewModel? SelectedItem
     {
         get => _selectedItem;

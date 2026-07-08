@@ -14,7 +14,6 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
         : base(transferSystem.Identifier)
     {
         _transferSystem = transferSystem;
-
         _transferSystem.StateChanged += OnStateChanged;
     }
 
@@ -37,24 +36,29 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
     // =========================
 
     public bool CanMoveToLoadPort =>
-        _transferSystem.CurrentLocation == "Home" &&
-        !_transferSystem.HasMaterial;
+        _transferSystem.CurrentLocation != "Load Port";
 
-    public bool CanPick =>
+    public bool CanMoveToChamber =>
+        _transferSystem.CurrentLocation != "Chamber";
+
+    public bool CanPickFromCarrier =>
         _transferSystem.CurrentLocation == "Load Port" &&
         !_transferSystem.HasMaterial;
 
-    public bool CanMoveToChamber =>
+    public bool CanPlaceToCarrier =>
         _transferSystem.CurrentLocation == "Load Port" &&
         _transferSystem.HasMaterial;
 
-    public bool CanPlace =>
+    public bool CanPickFromChamber =>
+        _transferSystem.CurrentLocation == "Chamber" &&
+        !_transferSystem.HasMaterial;
+
+    public bool CanPlaceToChamber =>
         _transferSystem.CurrentLocation == "Chamber" &&
         _transferSystem.HasMaterial;
 
     public bool CanMoveHome =>
-        _transferSystem.CurrentLocation == "Chamber" &&
-        !_transferSystem.HasMaterial;
+        _transferSystem.CurrentLocation != "Home";
 
     // =========================
     // Actions
@@ -65,24 +69,34 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
         _transferSystem.MoveToLoadPort();
     }
 
-    public void Pick()
-    {
-        _transferSystem.Pick();
-    }
-
     public void MoveToChamber()
     {
         _transferSystem.MoveToChamber();
     }
 
-    public void Place()
-    {
-        _transferSystem.Place();
-    }
-
     public void MoveHome()
     {
         _transferSystem.MoveHome();
+    }
+
+    public void PickFromCarrier()
+    {
+        _transferSystem.PickFromCarrier();
+    }
+
+    public void PlaceToCarrier()
+    {
+        _transferSystem.PlaceToCarrier();
+    }
+
+    public void PickFromChamber()
+    {
+        _transferSystem.PickFromChamber();
+    }
+
+    public void PlaceToChamber()
+    {
+        _transferSystem.PlaceToChamber();
     }
 
     // =========================
@@ -98,10 +112,14 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
         OnPropertyChanged(nameof(HoldingStatusBrush));
 
         OnPropertyChanged(nameof(CanMoveToLoadPort));
-        OnPropertyChanged(nameof(CanPick));
         OnPropertyChanged(nameof(CanMoveToChamber));
-        OnPropertyChanged(nameof(CanPlace));
         OnPropertyChanged(nameof(CanMoveHome));
+
+        OnPropertyChanged(nameof(CanPickFromCarrier));
+        OnPropertyChanged(nameof(CanPlaceToCarrier));
+
+        OnPropertyChanged(nameof(CanPickFromChamber));
+        OnPropertyChanged(nameof(CanPlaceToChamber));
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

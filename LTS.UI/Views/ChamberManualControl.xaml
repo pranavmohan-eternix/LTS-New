@@ -47,11 +47,11 @@
                         Click="BtnInitialize_Click"
                         IsEnabled="{Binding CanInitialize}"/>
 
-                <Button Content="Place Material"
+                <Button Content="Material Placed"
                         Click="BtnPlace_Click"
                         IsEnabled="{Binding CanPlaceMaterial}"/>
 
-                <Button Content="Pick Material"
+                <Button Content="Material Removed"
                         Click="BtnPick_Click"
                         IsEnabled="{Binding CanPickMaterial}"/>
 

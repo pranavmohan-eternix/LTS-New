@@ -8,18 +8,16 @@
 
             <Setter Property="Background" Value="#2563EB"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Height" Value="42"/>
-            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="14"/>
 
             <Style.Triggers>
-
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Background" Value="#D1D5DB"/>
                     <Setter Property="Foreground" Value="#6B7280"/>
                 </Trigger>
-
             </Style.Triggers>
 
         </Style>
@@ -45,17 +43,25 @@
                         Click="BtnMoveToLoadPort_Click"
                         IsEnabled="{Binding CanMoveToLoadPort}"/>
 
-                <Button Content="Pick"
-                        Click="BtnPick_Click"
-                        IsEnabled="{Binding CanPick}"/>
-
                 <Button Content="Move to Chamber"
                         Click="BtnMoveToChamber_Click"
                         IsEnabled="{Binding CanMoveToChamber}"/>
 
-                <Button Content="Place"
-                        Click="BtnPlace_Click"
-                        IsEnabled="{Binding CanPlace}"/>
+                <Button Content="Pick from Carrier"
+                        Click="BtnPickFromCarrier_Click"
+                        IsEnabled="{Binding CanPickFromCarrier}"/>
+
+                <Button Content="Place to Chamber"
+                        Click="BtnPlaceToChamber_Click"
+                        IsEnabled="{Binding CanPlaceToChamber}"/>
+
+                <Button Content="Pick from Chamber"
+                        Click="BtnPickFromChamber_Click"
+                        IsEnabled="{Binding CanPickFromChamber}"/>
+
+                <Button Content="Place to Carrier"
+                        Click="BtnPlaceToCarrier_Click"
+                        IsEnabled="{Binding CanPlaceToCarrier}"/>
 
                 <Button Content="Move Home"
                         Click="BtnMoveHome_Click"
@@ -74,8 +80,8 @@
             <Grid Margin="25">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition Width="170"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
@@ -83,8 +89,6 @@
                     <RowDefinition Height="45"/>
                     <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
-
-                <!-- Transfer -->
 
                 <TextBlock Text="Transfer"
                            FontWeight="Bold"
@@ -95,8 +99,6 @@
                            Text="{Binding Identifier}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
-
-                <!-- Location -->
 
                 <TextBlock Grid.Row="1"
                            Text="Location"
@@ -109,8 +111,6 @@
                            Text="{Binding CurrentLocation}"
                            FontSize="16"
                            VerticalAlignment="Center"/>
-
-                <!-- Holding -->
 
                 <TextBlock Grid.Row="2"
                            Text="Holding"

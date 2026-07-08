@@ -19,19 +19,29 @@ namespace LTS.UI.Views
             ViewModel?.MoveToLoadPort();
         }
 
-        private void BtnPick_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.Pick();
-        }
-
         private void BtnMoveToChamber_Click(object sender, RoutedEventArgs e)
         {
             ViewModel?.MoveToChamber();
         }
 
-        private void BtnPlace_Click(object sender, RoutedEventArgs e)
+        private void BtnPickFromCarrier_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.Place();
+            ViewModel?.PickFromCarrier();
+        }
+
+        private void BtnPlaceToChamber_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.PlaceToChamber();
+        }
+
+        private void BtnPickFromChamber_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.PickFromChamber();
+        }
+
+        private void BtnPlaceToCarrier_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.PlaceToCarrier();
         }
 
         private void BtnMoveHome_Click(object sender, RoutedEventArgs e)

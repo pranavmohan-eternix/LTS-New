@@ -8,10 +8,10 @@
 
             <Setter Property="Background" Value="#2563EB"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Height" Value="42"/>
-            <Setter Property="Margin" Value="0,0,0,12"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
 
             <Style.Triggers>
@@ -31,6 +31,7 @@
             <ColumnDefinition Width="0.8*"/>
             <ColumnDefinition Width="1.4*"/>
         </Grid.ColumnDefinitions>
+
         <!-- Commands -->
 
         <GroupBox Header="Commands"
@@ -39,17 +40,33 @@
 
             <StackPanel Margin="15">
 
-                <Button Content="Load Carrier"
-                        Click="BtnLoad_Click"
-                        IsEnabled="{Binding CanLoad}"/>
+                <Button Content="Dock"
+                        Click="BtnDock_Click"
+                        IsEnabled="{Binding CanDock}"/>
 
-                <Button Content="Unload Carrier"
-                        Click="BtnUnload_Click"
-                        IsEnabled="{Binding CanUnload}"/>
+                <Button Content="Clamp"
+                        Click="BtnClamp_Click"
+                        IsEnabled="{Binding CanClamp}"/>
+
+                <Button Content="Open Door"
+                        Click="BtnOpenDoor_Click"
+                        IsEnabled="{Binding CanOpenDoor}"/>
 
                 <Button Content="Map Carrier"
                         Click="BtnMap_Click"
                         IsEnabled="{Binding CanMap}"/>
+
+                <Button Content="Close Door"
+                        Click="BtnCloseDoor_Click"
+                        IsEnabled="{Binding CanCloseDoor}"/>
+
+                <Button Content="Unclamp"
+                        Click="BtnUnclamp_Click"
+                        IsEnabled="{Binding CanUnclamp}"/>
+
+                <Button Content="Undock"
+                        Click="BtnUndock_Click"
+                        IsEnabled="{Binding CanUndock}"/>
 
             </StackPanel>
 
@@ -61,36 +78,33 @@
                   Grid.Column="1"
                   Margin="5">
 
-            <Grid Margin="25">
+            <Grid Margin="20">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="170"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
-                <!-- Load Port -->
 
                 <TextBlock Text="Load Port"
                            FontWeight="Bold"
-                           FontSize="18"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Column="1"
                            Text="{Binding Identifier}"
-                           FontSize="18"
                            VerticalAlignment="Center"/>
-
-                <!-- Carrier -->
 
                 <TextBlock Grid.Row="1"
                            Text="Carrier"
                            FontWeight="Bold"
-                           FontSize="18"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="1"
@@ -98,24 +112,55 @@
                            Text="{Binding CarrierStatus}"
                            Foreground="{Binding CarrierStatusBrush}"
                            FontWeight="Bold"
-                           FontSize="16"
-                           VerticalAlignment="Center"/> 
-
-                <!-- Mapping -->
+                           VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2"
-                           Text="Mapping"
+                           Text="Dock"
                            FontWeight="Bold"
-                           FontSize="18"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2"
                            Grid.Column="1"
+                           Text="{Binding DockStatus}"
+                           Foreground="{Binding DockStatusBrush}"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="3"
+                           Text="Clamp"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding ClampStatus}"
+                           Foreground="{Binding ClampStatusBrush}"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="4"
+                           Text="Door"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding DoorStatus}"
+                           Foreground="{Binding DoorStatusBrush}"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="5"
+                           Text="Mapping"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="5"
+                           Grid.Column="1"
                            Text="{Binding MappingStatus}"
                            Foreground="{Binding MappingStatusBrush}"
                            FontWeight="Bold"
-                           FontSize="16"
-                           VerticalAlignment="Center"/> 
+                           VerticalAlignment="Center"/>
 
             </Grid>
 

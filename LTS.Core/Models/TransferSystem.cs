@@ -29,27 +29,39 @@ public class TransferSystem
         OnStateChanged();
     }
 
-    public void Pick()
-    {
-        HasMaterial = true;
-        OnStateChanged();
-    }
-
     public void MoveToChamber()
     {
         CurrentLocation = "Chamber";
         OnStateChanged();
     }
 
-    public void Place()
+    public void MoveHome()
+    {
+        CurrentLocation = "Home";
+        OnStateChanged();
+    }
+
+    public void PickFromCarrier()
+    {
+        HasMaterial = true;
+        OnStateChanged();
+    }
+
+    public void PlaceToChamber()
     {
         HasMaterial = false;
         OnStateChanged();
     }
 
-    public void MoveHome()
+    public void PickFromChamber()
     {
-        CurrentLocation = "Home";
+        HasMaterial = true;
+        OnStateChanged();
+    }
+
+    public void PlaceToCarrier()
+    {
+        HasMaterial = false;
         OnStateChanged();
     }
 

@@ -14,19 +14,39 @@ namespace LTS.UI.Views
         private LoadPortViewModel? ViewModel =>
             DataContext as LoadPortViewModel;
 
-        private void BtnLoad_Click(object sender, RoutedEventArgs e)
+        private void BtnDock_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.LoadCarrier();
+            ViewModel?.Dock();
         }
 
-        private void BtnUnload_Click(object sender, RoutedEventArgs e)
+        private void BtnClamp_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.UnloadCarrier();
+            ViewModel?.Clamp();
+        }
+
+        private void BtnOpenDoor_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.OpenDoor();
         }
 
         private void BtnMap_Click(object sender, RoutedEventArgs e)
         {
             ViewModel?.MapCarrier();
+        }
+
+        private void BtnCloseDoor_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.CloseDoor();
+        }
+
+        private void BtnUnclamp_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.Unclamp();
+        }
+
+        private void BtnUndock_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.Undock();
         }
     }
 }
