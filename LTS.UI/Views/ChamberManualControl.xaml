@@ -25,6 +25,14 @@
 
         </Style>
 
+        <Style TargetType="Button"
+               x:Key="CancelButtonStyle"
+               BasedOn="{StaticResource {x:Type Button}}">
+
+            <Setter Property="Background" Value="#DC2626"/>
+
+        </Style>
+
     </UserControl.Resources>
 
     <Grid Margin="10">
@@ -47,17 +55,22 @@
                         Click="BtnInitialize_Click"
                         IsEnabled="{Binding CanInitialize}"/>
 
-                <Button Content="Material Placed"
-                        Click="BtnPlace_Click"
-                        IsEnabled="{Binding CanPlaceMaterial}"/>
+                <Button Content="Open Door"
+                        Click="BtnOpenDoor_Click"
+                        IsEnabled="{Binding CanOpenDoor}"/>
 
-                <Button Content="Material Removed"
-                        Click="BtnPick_Click"
-                        IsEnabled="{Binding CanPickMaterial}"/>
+                <Button Content="Close Door"
+                        Click="BtnCloseDoor_Click"
+                        IsEnabled="{Binding CanCloseDoor}"/>
 
                 <Button Content="Run Recipe"
                         Click="BtnRunRecipe_Click"
                         IsEnabled="{Binding CanRunRecipe}"/>
+
+                <Button Content="Cancel Recipe"
+                        Style="{StaticResource CancelButtonStyle}"
+                        Click="BtnCancelRecipe_Click"
+                        IsEnabled="{Binding CanCancelRecipe}"/>
 
             </StackPanel>
 
@@ -77,6 +90,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="55"/>
                     <RowDefinition Height="55"/>
                     <RowDefinition Height="55"/>
                     <RowDefinition Height="55"/>
@@ -126,15 +140,31 @@
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
-                <!-- Duration -->
+                <!-- Door -->
 
                 <TextBlock Grid.Row="3"
-                           Text="Duration"
+                           Text="Door"
                            FontWeight="Bold"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding DoorStatus}"
+                           Foreground="{Binding DoorStatusBrush}"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <!-- Duration -->
+
+                <TextBlock Grid.Row="4"
+                           Text="Duration"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="4"
                            Grid.Column="1"
                            Text="{Binding ProcessDuration}"
                            FontSize="16"
@@ -142,13 +172,13 @@
 
                 <!-- Recipe -->
 
-                <TextBlock Grid.Row="4"
+                <TextBlock Grid.Row="5"
                            Text="Recipe"
                            FontWeight="Bold"
                            FontSize="16"
                            VerticalAlignment="Center"/>
 
-                <TextBlock Grid.Row="4"
+                <TextBlock Grid.Row="5"
                            Grid.Column="1"
                            Text="{Binding SelectedRecipe}"
                            FontSize="16"

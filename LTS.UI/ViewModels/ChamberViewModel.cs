@@ -29,6 +29,12 @@ public class ChamberViewModel : EquipmentItemViewModel, INotifyPropertyChanged
     public string MaterialPresence =>
         _chamber.MaterialPresence ? "Present" : "Empty";
 
+    public string DoorStatus =>
+        _chamber.IsDoorOpen ? "Open" : "Closed";
+
+    public Brush DoorStatusBrush =>
+        _chamber.IsDoorOpen ? Brushes.LimeGreen : Brushes.Red;
+
     public string SelectedRecipe => _chamber.SelectedRecipe;
 
     public Brush ProcessStateBrush
@@ -52,18 +58,22 @@ public class ChamberViewModel : EquipmentItemViewModel, INotifyPropertyChanged
 
     public bool CanInitialize => !_chamber.IsInitialized;
 
-    public bool CanPlaceMaterial =>
+    public bool CanOpenDoor =>
         _chamber.IsInitialized &&
-        !_chamber.MaterialPresence &&
-        _chamber.ProcessState == ProcessState.Idle;
-
-    public bool CanPickMaterial =>
-        _chamber.MaterialPresence &&
+        !_chamber.IsDoorOpen &&
         _chamber.ProcessState != ProcessState.Running;
+
+    public bool CanCloseDoor =>
+        _chamber.IsInitialized &&
+        _chamber.IsDoorOpen;
 
     public bool CanRunRecipe =>
         _chamber.MaterialPresence &&
+        !_chamber.IsDoorOpen &&
         _chamber.ProcessState == ProcessState.Idle;
+
+    public bool CanCancelRecipe =>
+        _chamber.ProcessState == ProcessState.Running;
 
     // =========================
     // Actions
@@ -74,19 +84,31 @@ public class ChamberViewModel : EquipmentItemViewModel, INotifyPropertyChanged
         _chamber.Initialize();
     }
 
-    public void PlaceMaterial()
+    public void OpenDoor()
     {
-        _chamber.PrepareForTransfer(TransferAction.Place);
+        _chamber.OpenDoor();
     }
 
-    public void PickMaterial()
+    public void CloseDoor()
     {
-        _chamber.PrepareForTransfer(TransferAction.Pick);
+        _chamber.CloseDoor();
     }
 
+    // Old parameterless version kept in case anything else calls it.
     public void RunRecipe()
     {
         Task.Run(() => _chamber.RunRecipe());
+    }
+
+    // NEW: called after the user picks a recipe file from disk.
+    public void RunRecipe(string recipeFilePath)
+    {
+        Task.Run(() => _chamber.RunRecipeFromFile(recipeFilePath));
+    }
+
+    public void CancelRecipe()
+    {
+        _chamber.CancelRecipe();
     }
 
     // =========================
@@ -100,13 +122,16 @@ public class ChamberViewModel : EquipmentItemViewModel, INotifyPropertyChanged
         OnPropertyChanged(nameof(ProcessState));
         OnPropertyChanged(nameof(ProcessDuration));
         OnPropertyChanged(nameof(MaterialPresence));
+        OnPropertyChanged(nameof(DoorStatus));
+        OnPropertyChanged(nameof(DoorStatusBrush));
         OnPropertyChanged(nameof(SelectedRecipe));
         OnPropertyChanged(nameof(ProcessStateBrush));
 
         OnPropertyChanged(nameof(CanInitialize));
-        OnPropertyChanged(nameof(CanPlaceMaterial));
-        OnPropertyChanged(nameof(CanPickMaterial));
+        OnPropertyChanged(nameof(CanOpenDoor));
+        OnPropertyChanged(nameof(CanCloseDoor));
         OnPropertyChanged(nameof(CanRunRecipe));
+        OnPropertyChanged(nameof(CanCancelRecipe));
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

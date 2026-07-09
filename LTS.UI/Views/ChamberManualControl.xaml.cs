@@ -19,19 +19,36 @@ namespace LTS.UI.Views
             ViewModel?.Initialize();
         }
 
-        private void BtnPlace_Click(object sender, RoutedEventArgs e)
+        private void BtnOpenDoor_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.PlaceMaterial();
+            ViewModel?.OpenDoor();
         }
 
-        private void BtnPick_Click(object sender, RoutedEventArgs e)
+        private void BtnCloseDoor_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.PickMaterial();
+            ViewModel?.CloseDoor();
         }
 
         private void BtnRunRecipe_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.RunRecipe();
+            var dialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = "Select Recipe File",
+                Filter = "Recipe Files (*.txt;*.recipe)|*.txt;*.recipe|All Files (*.*)|*.*",
+                CheckFileExists = true
+            };
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                ViewModel?.RunRecipe(dialog.FileName);
+            }
+        }
+
+        private void BtnCancelRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel?.CancelRecipe();
         }
     }
 }
