@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
@@ -10,16 +11,30 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
 {
     private readonly TransferSystem _transferSystem;
 
-    public TransferSystemViewModel(TransferSystem transferSystem)
+    public TransferSystemViewModel(
+        TransferSystem transferSystem,
+        ObservableCollection<ChamberViewModel> chambers,
+        ObservableCollection<LoadPortViewModel> loadPorts)
         : base(transferSystem.Identifier)
     {
         _transferSystem = transferSystem;
+        Chambers = chambers;
+        LoadPorts = loadPorts;
+
         _transferSystem.StateChanged += OnStateChanged;
     }
 
-    // =========================
+    
+    // Destination Lists
+    
+
+    public ObservableCollection<ChamberViewModel> Chambers { get; }
+
+    public ObservableCollection<LoadPortViewModel> LoadPorts { get; }
+
+  
     // Status
-    // =========================
+ 
 
     public string CurrentLocation => _transferSystem.CurrentLocation;
 
@@ -31,47 +46,39 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
             ? Brushes.LimeGreen
             : Brushes.Red;
 
-    // =========================
+  
     // Button States
-    // =========================
+    
 
-    public bool CanMoveToLoadPort =>
-        _transferSystem.CurrentLocation != "Load Port";
+    public bool CanMove => true;
 
-    public bool CanMoveToChamber =>
-        _transferSystem.CurrentLocation != "Chamber";
+    public bool CanPick =>
+        !_transferSystem.HasMaterial &&
+        _transferSystem.CurrentLocation != "Home";
 
-    public bool CanPickFromCarrier =>
-        _transferSystem.CurrentLocation == "Load Port" &&
-        !_transferSystem.HasMaterial;
-
-    public bool CanPlaceToCarrier =>
-        _transferSystem.CurrentLocation == "Load Port" &&
-        _transferSystem.HasMaterial;
-
-    public bool CanPickFromChamber =>
-        _transferSystem.CurrentLocation == "Chamber" &&
-        !_transferSystem.HasMaterial;
-
-    public bool CanPlaceToChamber =>
-        _transferSystem.CurrentLocation == "Chamber" &&
-        _transferSystem.HasMaterial;
-
+    public bool CanPlace =>
+        _transferSystem.HasMaterial &&
+        _transferSystem.CurrentLocation != "Home";
     public bool CanMoveHome =>
         _transferSystem.CurrentLocation != "Home";
 
-    // =========================
+  
     // Actions
-    // =========================
+  
 
-    public void MoveToLoadPort()
+    public void MoveTo(string location)
     {
-        _transferSystem.MoveToLoadPort();
+        _transferSystem.MoveTo(location);
     }
 
-    public void MoveToChamber()
+    public void Pick(string sourceLocation)
     {
-        _transferSystem.MoveToChamber();
+        _transferSystem.Pick(sourceLocation);
+    }
+
+    public void Place(string destinationLocation)
+    {
+        _transferSystem.Place(destinationLocation);
     }
 
     public void MoveHome()
@@ -79,29 +86,8 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
         _transferSystem.MoveHome();
     }
 
-    public void PickFromCarrier()
-    {
-        _transferSystem.PickFromCarrier();
-    }
-
-    public void PlaceToCarrier()
-    {
-        _transferSystem.PlaceToCarrier();
-    }
-
-    public void PickFromChamber()
-    {
-        _transferSystem.PickFromChamber();
-    }
-
-    public void PlaceToChamber()
-    {
-        _transferSystem.PlaceToChamber();
-    }
-
-    // =========================
+  
     // Property Changed
-    // =========================
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -111,15 +97,10 @@ public class TransferSystemViewModel : EquipmentItemViewModel, INotifyPropertyCh
         OnPropertyChanged(nameof(HoldingStatus));
         OnPropertyChanged(nameof(HoldingStatusBrush));
 
-        OnPropertyChanged(nameof(CanMoveToLoadPort));
-        OnPropertyChanged(nameof(CanMoveToChamber));
+        OnPropertyChanged(nameof(CanMove));
+        OnPropertyChanged(nameof(CanPick));
+        OnPropertyChanged(nameof(CanPlace));
         OnPropertyChanged(nameof(CanMoveHome));
-
-        OnPropertyChanged(nameof(CanPickFromCarrier));
-        OnPropertyChanged(nameof(CanPlaceToCarrier));
-
-        OnPropertyChanged(nameof(CanPickFromChamber));
-        OnPropertyChanged(nameof(CanPlaceToChamber));
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)

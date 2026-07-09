@@ -39,32 +39,20 @@
 
             <StackPanel Margin="15">
 
-                <Button Content="Move to Load Port"
-                        Click="BtnMoveToLoadPort_Click"
-                        IsEnabled="{Binding CanMoveToLoadPort}"/>
+                <Button Content="Move"
+                        Click="BtnMove_Click"
+                        IsEnabled="{Binding CanMove}"/>
 
-                <Button Content="Move to Chamber"
-                        Click="BtnMoveToChamber_Click"
-                        IsEnabled="{Binding CanMoveToChamber}"/>
+                <Button Content="Pick"
+                        Click="BtnPick_Click"
+                        IsEnabled="{Binding CanPick}"/>
 
-                <Button Content="Pick from Carrier"
-                        Click="BtnPickFromCarrier_Click"
-                        IsEnabled="{Binding CanPickFromCarrier}"/>
+                <Button Content="Place"
+                        Click="BtnPlace_Click"
+                        IsEnabled="{Binding CanPlace}"/>
 
-                <Button Content="Place to Chamber"
-                        Click="BtnPlaceToChamber_Click"
-                        IsEnabled="{Binding CanPlaceToChamber}"/>
-
-                <Button Content="Pick from Chamber"
-                        Click="BtnPickFromChamber_Click"
-                        IsEnabled="{Binding CanPickFromChamber}"/>
-
-                <Button Content="Place to Carrier"
-                        Click="BtnPlaceToCarrier_Click"
-                        IsEnabled="{Binding CanPlaceToCarrier}"/>
-
-                <Button Content="Move Home"
-                        Click="BtnMoveHome_Click"
+                <Button Content="Home"
+                        Click="BtnHome_Click"
                         IsEnabled="{Binding CanMoveHome}"/>
 
             </StackPanel>

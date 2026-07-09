@@ -46,7 +46,7 @@ public class EquipmentViewModel : INotifyPropertyChanged
             equipment.LoadPorts.Select(lp => new LoadPortViewModel(lp)));
 
         TransferSystem = new TransferSystemViewModel(
-            equipment.TransferSystem);
+             equipment.TransferSystem, Chambers, LoadPorts);
 
         EquipmentItems = new ObservableCollection<EquipmentItemViewModel>();
 

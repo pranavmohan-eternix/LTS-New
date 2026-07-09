@@ -78,91 +78,145 @@
                   Grid.Column="1"
                   Margin="5">
 
-            <Grid Margin="20">
+            <StackPanel Margin="20">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="170"/>
-                </Grid.ColumnDefinitions>
+                <Grid>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="170"/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Load Port"
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="32"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Load Port"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Column="1"
+                               Text="{Binding Identifier}"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="1"
+                               Text="Carrier"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="1"
+                               Text="{Binding CarrierStatus}"
+                               Foreground="{Binding CarrierStatusBrush}"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="2"
+                               Text="Dock"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="1"
+                               Text="{Binding DockStatus}"
+                               Foreground="{Binding DockStatusBrush}"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="3"
+                               Text="Clamp"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="1"
+                               Text="{Binding ClampStatus}"
+                               Foreground="{Binding ClampStatusBrush}"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="4"
+                               Text="Door"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="1"
+                               Text="{Binding DoorStatus}"
+                               Foreground="{Binding DoorStatusBrush}"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="5"
+                               Text="Mapping"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="5"
+                               Grid.Column="1"
+                               Text="{Binding MappingStatus}"
+                               Foreground="{Binding MappingStatusBrush}"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               VerticalAlignment="Center"/>
+
+                </Grid>
+
+                <!-- Slot Map -->
+
+                <TextBlock Text="Slot Map"
                            FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                           FontSize="13"
+                           Margin="0,10,0,6"/>
 
-                <TextBlock Grid.Column="1"
-                           Text="{Binding Identifier}"
-                           VerticalAlignment="Center"/>
+                <ItemsControl ItemsSource="{Binding Slots}"
+                              HorizontalAlignment="Center">
 
-                <TextBlock Grid.Row="1"
-                           Text="Carrier"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="5"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                <TextBlock Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding CarrierStatus}"
-                           Foreground="{Binding CarrierStatusBrush}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding StatusBrush}"
+                                    Width="42"
+                                    Height="42"
+                                    Margin="3"
+                                    CornerRadius="3"
+                                    ToolTip="{Binding StatusText}">
 
-                <TextBlock Grid.Row="2"
-                           Text="Dock"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding SlotNumber}"
+                                           FontSize="10"
+                                           FontWeight="Bold"
+                                           Foreground="White"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
 
-                <TextBlock Grid.Row="2"
-                           Grid.Column="1"
-                           Text="{Binding DockStatus}"
-                           Foreground="{Binding DockStatusBrush}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
-                <TextBlock Grid.Row="3"
-                           Text="Clamp"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                </ItemsControl>
 
-                <TextBlock Grid.Row="3"
-                           Grid.Column="1"
-                           Text="{Binding ClampStatus}"
-                           Foreground="{Binding ClampStatusBrush}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Row="4"
-                           Text="Door"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Row="4"
-                           Grid.Column="1"
-                           Text="{Binding DoorStatus}"
-                           Foreground="{Binding DoorStatusBrush}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Row="5"
-                           Text="Mapping"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
-
-                <TextBlock Grid.Row="5"
-                           Grid.Column="1"
-                           Text="{Binding MappingStatus}"
-                           Foreground="{Binding MappingStatusBrush}"
-                           FontWeight="Bold"
-                           VerticalAlignment="Center"/>
-
-            </Grid>
+            </StackPanel>
 
         </GroupBox>
 

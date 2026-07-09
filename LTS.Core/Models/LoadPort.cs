@@ -4,6 +4,10 @@ namespace LTS.Core.Models;
 
 public class LoadPort
 {
+    public const int SlotCount = 25;
+
+    private static readonly Random _rng = new Random();
+
     public string Identifier { get; }
 
     public bool HasCarrier { get; private set; }
@@ -15,6 +19,12 @@ public class LoadPort
     public bool IsDoorOpen { get; private set; }
 
     public bool IsMapped { get; private set; }
+
+    // Per-slot wafer presence from the mapping scan.
+    // null  = not scanned yet
+    // true  = wafer present
+    // false = slot empty
+    public bool?[] SlotStates { get; }
 
     public event EventHandler? StateChanged;
 
@@ -28,6 +38,8 @@ public class LoadPort
         IsClamped = false;
         IsDoorOpen = false;
         IsMapped = false;
+
+        SlotStates = new bool?[SlotCount];
     }
 
     public void Dock()
@@ -62,6 +74,12 @@ public class LoadPort
         if (!IsDoorOpen || IsMapped)
             return;
 
+        // Simulate the mapping sensor scanning all 25 slots
+        for (int i = 0; i < SlotCount; i++)
+        {
+            SlotStates[i] = _rng.Next(2) == 1;
+        }
+
         IsMapped = true;
         OnStateChanged();
     }
@@ -91,6 +109,12 @@ public class LoadPort
 
         IsDocked = false;
         IsMapped = false;
+
+        for (int i = 0; i < SlotCount; i++)
+        {
+            SlotStates[i] = null;
+        }
+
         OnStateChanged();
     }
 

@@ -23,15 +23,10 @@ public class TransferSystem
         HasMaterial = false;
     }
 
-    public void MoveToLoadPort()
+   
+    public void MoveTo(string location)
     {
-        CurrentLocation = "Load Port";
-        OnStateChanged();
-    }
-
-    public void MoveToChamber()
-    {
-        CurrentLocation = "Chamber";
+        CurrentLocation = location;
         OnStateChanged();
     }
 
@@ -41,25 +36,15 @@ public class TransferSystem
         OnStateChanged();
     }
 
-    public void PickFromCarrier()
+    
+    public void Pick(string sourceLocation)
     {
         HasMaterial = true;
         OnStateChanged();
     }
 
-    public void PlaceToChamber()
-    {
-        HasMaterial = false;
-        OnStateChanged();
-    }
-
-    public void PickFromChamber()
-    {
-        HasMaterial = true;
-        OnStateChanged();
-    }
-
-    public void PlaceToCarrier()
+    
+    public void Place(string destinationLocation)
     {
         HasMaterial = false;
         OnStateChanged();

@@ -88,12 +88,12 @@
 
                 <TextBlock Text="Chamber"
                            FontWeight="Bold"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Column="1"
                            Text="{Binding Identifier}"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <!-- State -->
@@ -101,7 +101,7 @@
                 <TextBlock Grid.Row="1"
                            Text="State"
                            FontWeight="Bold"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="1"
@@ -109,7 +109,7 @@
                            Text="{Binding ProcessState}"
                            Foreground="{Binding ProcessStateBrush}"
                            FontWeight="Bold"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <!-- Material -->
@@ -117,13 +117,13 @@
                 <TextBlock Grid.Row="2"
                            Text="Material"
                            FontWeight="Bold"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="2"
                            Grid.Column="1"
                            Text="{Binding MaterialPresence}"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <!-- Duration -->
@@ -131,13 +131,13 @@
                 <TextBlock Grid.Row="3"
                            Text="Duration"
                            FontWeight="Bold"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="3"
                            Grid.Column="1"
                            Text="{Binding ProcessDuration}"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <!-- Recipe -->
@@ -145,13 +145,13 @@
                 <TextBlock Grid.Row="4"
                            Text="Recipe"
                            FontWeight="Bold"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
                 <TextBlock Grid.Row="4"
                            Grid.Column="1"
                            Text="{Binding SelectedRecipe}"
-                           FontSize="18"
+                           FontSize="16"
                            VerticalAlignment="Center"/>
 
             </Grid>

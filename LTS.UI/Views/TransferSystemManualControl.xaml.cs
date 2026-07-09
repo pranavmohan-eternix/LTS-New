@@ -14,37 +14,33 @@ namespace LTS.UI.Views
         private TransferSystemViewModel? ViewModel =>
             DataContext as TransferSystemViewModel;
 
-        private void BtnMoveToLoadPort_Click(object sender, RoutedEventArgs e)
+        private void BtnMove_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.MoveToLoadPort();
+            if (ViewModel == null)
+                return;
+
+            var dialog = new LocationSelectionDialog(ViewModel, "Move")
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            if (dialog.ShowDialog() == true && dialog.SelectedIdentifier != null)
+                ViewModel.MoveTo(dialog.SelectedIdentifier);
         }
 
-        private void BtnMoveToChamber_Click(object sender, RoutedEventArgs e)
+        private void BtnPick_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.MoveToChamber();
+            // Picks from wherever the arm currently is — no popup needed
+            ViewModel?.Pick(ViewModel.CurrentLocation);
         }
 
-        private void BtnPickFromCarrier_Click(object sender, RoutedEventArgs e)
+        private void BtnPlace_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel?.PickFromCarrier();
+            // Places at wherever the arm currently is — no popup needed
+            ViewModel?.Place(ViewModel.CurrentLocation);
         }
 
-        private void BtnPlaceToChamber_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.PlaceToChamber();
-        }
-
-        private void BtnPickFromChamber_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.PickFromChamber();
-        }
-
-        private void BtnPlaceToCarrier_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.PlaceToCarrier();
-        }
-
-        private void BtnMoveHome_Click(object sender, RoutedEventArgs e)
+        private void BtnHome_Click(object sender, RoutedEventArgs e)
         {
             ViewModel?.MoveHome();
         }

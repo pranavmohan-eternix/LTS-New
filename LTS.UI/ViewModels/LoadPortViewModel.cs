@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
@@ -6,15 +7,76 @@ using LTS.Core.Models;
 
 namespace LTS.UI.ViewModels;
 
+public class SlotViewModel : INotifyPropertyChanged
+{
+    public int SlotNumber { get; }
+
+    private bool? _isPresent;
+
+    public bool? IsPresent
+    {
+        get => _isPresent;
+        set
+        {
+            _isPresent = value;
+            OnPropertyChanged(nameof(IsPresent));
+            OnPropertyChanged(nameof(StatusText));
+            OnPropertyChanged(nameof(StatusBrush));
+        }
+    }
+
+    public string StatusText =>
+        _isPresent switch
+        {
+            true => "Present",
+            false => "Empty",
+            null => "—"
+        };
+
+    public Brush StatusBrush =>
+        _isPresent switch
+        {
+            true => Brushes.LimeGreen,
+            false => Brushes.Red,
+            null => Brushes.Gray
+        };
+
+    public SlotViewModel(int slotNumber, bool? isPresent)
+    {
+        SlotNumber = slotNumber;
+        _isPresent = isPresent;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
+
 public class LoadPortViewModel : EquipmentItemViewModel, INotifyPropertyChanged
 {
     private readonly LoadPort _loadPort;
+
+    // =========================
+    // Slots
+    // =========================
+
+    public ObservableCollection<SlotViewModel> Slots { get; }
 
     public LoadPortViewModel(LoadPort loadPort)
         : base(loadPort.Identifier)
     {
         _loadPort = loadPort;
         _loadPort.StateChanged += OnStateChanged;
+
+        Slots = new ObservableCollection<SlotViewModel>();
+
+        for (int i = 0; i < LoadPort.SlotCount; i++)
+        {
+            Slots.Add(new SlotViewModel(i + 1, _loadPort.SlotStates[i]));
+        }
     }
 
     // =========================
@@ -131,6 +193,11 @@ public class LoadPortViewModel : EquipmentItemViewModel, INotifyPropertyChanged
         OnPropertyChanged(nameof(CanCloseDoor));
         OnPropertyChanged(nameof(CanUnclamp));
         OnPropertyChanged(nameof(CanUndock));
+
+        for (int i = 0; i < LoadPort.SlotCount; i++)
+        {
+            Slots[i].IsPresent = _loadPort.SlotStates[i];
+        }
     }
 
     private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
