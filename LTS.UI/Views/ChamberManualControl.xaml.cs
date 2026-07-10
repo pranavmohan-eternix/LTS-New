@@ -29,7 +29,7 @@ namespace LTS.UI.Views
             ViewModel?.CloseDoor();
         }
 
-        private void BtnRunRecipe_Click(object sender, RoutedEventArgs e)
+        private async void BtnRunRecipe_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
@@ -40,9 +40,18 @@ namespace LTS.UI.Views
 
             bool? result = dialog.ShowDialog();
 
-            if (result == true)
+            if (result == true && ViewModel != null)
             {
-                ViewModel?.RunRecipe(dialog.FileName);
+                bool success = await ViewModel.RunRecipe(dialog.FileName);
+
+                if (!success)
+                {
+                    MessageBox.Show(
+                        "Invalid recipe file.\n\nThe file must contain both:\nRecipeName=...\nDuration=... (greater than 0)",
+                        "Recipe Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                }
             }
         }
 

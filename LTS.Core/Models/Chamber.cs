@@ -13,8 +13,8 @@ public class Chamber
         ProcessState = ProcessState.Init;
         MaterialPresence = false;
         IsDoorOpen = false;
-        ProcessDuration = 5;
-        SelectedRecipe = "RECIPE-01";
+        ProcessDuration = 0;
+        SelectedRecipe = "No Recipe Selected";
     }
 
     // Properties
@@ -77,6 +77,11 @@ public class Chamber
         {
             MaterialPresence = false;
             ProcessState = ProcessState.Idle;
+
+            // Recipe/duration belonged to the wafer that just left.
+            // Clear it so the next lot must select a fresh recipe file.
+            SelectedRecipe = "No Recipe Selected";
+            ProcessDuration = 0;
         }
 
         StateChanged?.Invoke(this, EventArgs.Empty);
@@ -95,32 +100,23 @@ public class Chamber
         StateChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    // Original behavior kept for compatibility (uses whatever recipe/duration is already set).
-    public void RunRecipe()
-    {
-        if (!MaterialPresence)
-            return;
-
-        if (IsDoorOpen)
-            return;
-
-        RunRecipeInternal();
-    }
 
     // NEW: Loads recipe name + duration from a file selected by the user, then runs it.
     // Expected file format (plain text):
     //     RecipeName=RECIPE-02
     //     Duration=20
-    public void RunRecipeFromFile(string filePath)
+    // Returns true if a valid recipe was found and the run started.
+    // Returns false if the file was invalid/empty — caller should show an error.
+    public bool RunRecipeFromFile(string filePath)
     {
         if (!MaterialPresence)
-            return;
+            return false;
 
         if (IsDoorOpen)
-            return;
+            return false;
 
-        string recipeName = SelectedRecipe;
-        int duration = ProcessDuration;
+        string? recipeName = null;
+        int? duration = null;
 
         try
         {
@@ -140,7 +136,8 @@ public class Chamber
 
                 if (key == "recipename" || key == "recipe")
                 {
-                    recipeName = value;
+                    if (!string.IsNullOrWhiteSpace(value))
+                        recipeName = value;
                 }
                 else if (key == "duration")
                 {
@@ -151,18 +148,21 @@ public class Chamber
         }
         catch (Exception)
         {
-            // If the file can't be read/parsed, fall back to the existing recipe/duration.
+            return false;
         }
 
-        SelectedRecipe = recipeName;
-        ProcessDuration = duration;
+        // File must have a real recipe name AND a duration greater than 0.
+        if (string.IsNullOrWhiteSpace(recipeName) || duration is null)
+            return false;
 
-        // Let the UI refresh Recipe/Duration text immediately, before Running starts.
+        SelectedRecipe = recipeName;
+        ProcessDuration = duration.Value;
+
         StateChanged?.Invoke(this, EventArgs.Empty);
 
         RunRecipeInternal();
+        return true;
     }
-
     private void RunRecipeInternal()
     {
         _cts = new CancellationTokenSource();

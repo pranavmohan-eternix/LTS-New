@@ -24,7 +24,8 @@ public class ChamberViewModel : EquipmentItemViewModel, INotifyPropertyChanged
 
     public ProcessState ProcessState => _chamber.ProcessState;
 
-    public string ProcessDuration => $"{_chamber.ProcessDuration} Seconds";
+    public string ProcessDuration =>
+     _chamber.ProcessDuration <= 0 ? "Not Set" : $"{_chamber.ProcessDuration} Seconds";
 
     public string MaterialPresence =>
         _chamber.MaterialPresence ? "Present" : "Empty";
@@ -94,16 +95,13 @@ public class ChamberViewModel : EquipmentItemViewModel, INotifyPropertyChanged
         _chamber.CloseDoor();
     }
 
-    // Old parameterless version kept in case anything else calls it.
-    public void RunRecipe()
-    {
-        Task.Run(() => _chamber.RunRecipe());
-    }
+
+
 
     // NEW: called after the user picks a recipe file from disk.
-    public void RunRecipe(string recipeFilePath)
+    public async Task<bool> RunRecipe(string recipeFilePath)
     {
-        Task.Run(() => _chamber.RunRecipeFromFile(recipeFilePath));
+        return await Task.Run(() => _chamber.RunRecipeFromFile(recipeFilePath));
     }
 
     public void CancelRecipe()
